@@ -1,0 +1,27 @@
+<!-- components/navbar/navbar.component.html -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/quizzes">QuizApp</a>
+  </div>
+
+  <div class="navbar-menu">
+    <a routerLink="/quizzes" routerLinkActive="active">Quizzes</a>
+    
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <a routerLink="/my-attempts" routerLinkActive="active">My Attempts</a>
+      <a routerLink="/quiz/create" routerLinkActive="active">Create Quiz</a>
+    </ng-container>
+  </div>
+
+  <div class="navbar-auth">
+    <ng-container *ngIf="!authService.isLoggedIn()">
+      <a routerLink="/login" class="btn-link">Login</a>
+      <a routerLink="/register" class="btn-primary">Register</a>
+    </ng-container>
+
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <span class="user-name">Hi, {{ currentUser?.username }}</span>
+      <button (click)="logout()" class="btn-logout">Logout</button>
+    </ng-container>
+  </div>
+</nav>

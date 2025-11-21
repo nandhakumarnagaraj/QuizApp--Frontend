@@ -1,0 +1,69 @@
+<!-- components/quiz-result/quiz-result.component.html -->
+<div class="container">
+  <div class="loading" *ngIf="loading">Loading result...</div>
+  
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div class="result-container" *ngIf="result">
+    <!-- Score Card -->
+    <div class="score-card">
+      <h2>Quiz Completed!</h2>
+      <div class="quiz-name">{{ result.quizText }}</div>
+      
+      <div class="score-circle" [ngClass]="getGradeClass(result.grade)">
+        <span class="grade">{{ result.grade }}</span>
+        <span class="percentage">{{ result.percentage | number:'1.0-0' }}%</span>
+      </div>
+
+      <div class="score-details">
+        <div class="detail-item">
+          <span class="label">Score</span>
+          <span class="value">{{ result.score }} / {{ result.totalQuestions }}</span>
+        </div>
+        <div class="detail-item correct">
+          <span class="label">Correct</span>
+          <span class="value">{{ result.correctAnswers }}</span>
+        </div>
+        <div class="detail-item wrong">
+          <span class="label">Wrong</span>
+          <span class="value">{{ result.wrongAnswers }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Results -->
+    <div class="question-results">
+      <h3>Review Answers</h3>
+      
+      <div 
+        *ngFor="let qr of result.questionResults; let i = index"
+        class="result-item"
+        [ngClass]="qr.isCorrect ? 'correct' : 'wrong'"
+      >
+        <div class="result-header">
+          <span class="question-num">Q{{ i + 1 }}</span>
+          <span class="result-badge">{{ qr.isCorrect ? '✓ Correct' : '✗ Wrong' }}</span>
+        </div>
+        
+        <p class="question-text">{{ qr.questionText }}</p>
+        
+        <div class="answers">
+          <div class="answer your-answer" [ngClass]="qr.isCorrect ? 'correct' : 'wrong'">
+            <span class="label">Your Answer:</span>
+            <span class="value">{{ qr.selectedAnswer }}</span>
+          </div>
+          <div class="answer correct-answer" *ngIf="!qr.isCorrect">
+            <span class="label">Correct Answer:</span>
+            <span class="value">{{ qr.correctAnswer }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="result-actions">
+      <a routerLink="/quizzes" class="btn-primary">Back to Quizzes</a>
+      <a routerLink="/my-attempts" class="btn-secondary">View All Attempts</a>
+    </div>
+  </div>
+</div>

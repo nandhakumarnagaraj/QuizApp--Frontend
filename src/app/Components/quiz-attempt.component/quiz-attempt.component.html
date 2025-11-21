@@ -1,0 +1,81 @@
+<!-- components/quiz-attempt/quiz-attempt.component.html -->
+<div class="container">
+  <div class="loading" *ngIf="loading">Loading quiz...</div>
+  
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div class="quiz-attempt" *ngIf="quiz && !loading">
+    <div class="quiz-attempt-header">
+      <h2>{{ quiz.quizText }}</h2>
+      <div class="progress-info">
+        Question {{ currentQuestionIndex + 1 }} of {{ quiz.questions.length }}
+        <span class="answered-count">({{ answeredCount }} answered)</span>
+      </div>
+    </div>
+
+    <!-- Question Navigation -->
+    <div class="question-nav">
+      <button 
+        *ngFor="let q of quiz.questions; let i = index"
+        (click)="goToQuestion(i)"
+        [class.active]="i === currentQuestionIndex"
+        [class.answered]="isQuestionAnswered(q.questionId!)"
+        class="nav-btn"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+
+    <!-- Current Question -->
+    <div class="question-card" *ngIf="currentQuestion">
+      <h3 class="question-text">
+        Q{{ currentQuestionIndex + 1 }}. {{ currentQuestion.questionText }}
+      </h3>
+
+      <div class="options">
+        <div 
+          *ngFor="let option of currentQuestion.options; let i = index"
+          (click)="selectOption(currentQuestion.questionId!, option.optionId!)"
+          [class.selected]="isOptionSelected(currentQuestion.questionId!, option.optionId!)"
+          class="option-item"
+        >
+          <span class="option-letter">{{ 'ABCD'[i] }}</span>
+          <span class="option-text">{{ option.optionText }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button 
+        (click)="prevQuestion()" 
+        [disabled]="currentQuestionIndex === 0"
+        class="btn-secondary"
+      >
+        &larr; Previous
+      </button>
+
+      <button 
+        *ngIf="currentQuestionIndex < quiz.questions.length - 1"
+        (click)="nextQuestion()"
+        class="btn-primary"
+      >
+        Next &rarr;
+      </button>
+
+      <button 
+        *ngIf="currentQuestionIndex === quiz.questions.length - 1"
+        (click)="submitQuiz()"
+        [disabled]="submitting || answeredCount === 0"
+        class="btn-success"
+      >
+        {{ submitting ? 'Submitting...' : 'Submit Quiz' }}
+      </button>
+    </div>
+
+    <!-- Warning if not all answered -->
+    <div class="warning-message" *ngIf="answeredCount < quiz.questions.length">
+      You have answered {{ answeredCount }} out of {{ quiz.questions.length }} questions.
+    </div>
+  </div>
+</div>

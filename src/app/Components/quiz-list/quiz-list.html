@@ -1,0 +1,47 @@
+<!-- components/quiz-list/quiz-list.component.html -->
+<div class="container">
+  <div class="header">
+    <h2>Available Quizzes</h2>
+    <a routerLink="/quiz/create" class="btn-primary" *ngIf="authService.isLoggedIn()">
+      + Create Quiz
+    </a>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading quizzes...</div>
+
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div class="quiz-grid" *ngIf="!loading && quizzes.length > 0">
+    <div class="quiz-card" *ngFor="let quiz of quizzes">
+      <div class="quiz-info">
+        <h3>{{ quiz.quizText }}</h3>
+        <p>{{ quiz.questions.length }} Questions</p>
+      </div>
+
+      <div class="quiz-actions">
+        <a [routerLink]="['/quiz', quiz.quizId]" class="btn-secondary"> View </a>
+        <a
+          [routerLink]="['/quiz', quiz.quizId, 'attempt']"
+          class="btn-primary"
+          *ngIf="authService.isLoggedIn()"
+        >
+          Start Quiz
+        </a>
+        <button
+          (click)="deleteQuiz(quiz.quizId!)"
+          class="btn-danger"
+          *ngIf="authService.isLoggedIn()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && quizzes.length === 0">
+    <p>No quizzes available yet.</p>
+    <a routerLink="/quiz/create" class="btn-primary" *ngIf="authService.isLoggedIn()">
+      Create Your First Quiz
+    </a>
+  </div>
+</div>

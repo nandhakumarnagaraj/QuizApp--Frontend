@@ -1,0 +1,41 @@
+<!-- components/quiz-detail/quiz-detail.component.html -->
+<div class="container">
+  <a routerLink="/quizzes" class="back-link">&larr; Back to Quizzes</a>
+
+  <div class="loading" *ngIf="loading">Loading quiz...</div>
+
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div class="quiz-detail" *ngIf="quiz">
+    <div class="quiz-header">
+      <h2>{{ quiz.quizText }}</h2>
+      <div class="quiz-meta">
+        <span>{{ quiz.questions.length }} Questions</span>
+      </div>
+    </div>
+
+    <div class="questions-preview">
+      <h3>Questions Preview</h3>
+
+      <div class="question-item" *ngFor="let question of quiz.questions; let i = index">
+        <div class="question-number">Q{{ i + 1 }}</div>
+        <div class="question-content">
+          <p class="question-text">{{ question.questionText }}</p>
+          <ul class="options-list">
+            <li *ngFor="let option of question.options; let j = index">
+              {{ String.fromCharCode(65 + j) }}. {{ option.optionText }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-actions" *ngIf="authService.isLoggedIn()">
+      <a [routerLink]="['/quiz', quiz.quizId, 'attempt']" class="btn-primary btn-large">
+        Start Quiz
+      </a>
+      <a [routerLink]="['/quiz', quiz.quizId, 'edit']" class="btn-secondary"> Edit Quiz </a>
+      <a [routerLink]="['/leaderboard', quiz.quizId]" class="btn-secondary"> View Leaderboard </a>
+    </div>
+  </div>
+</div>
