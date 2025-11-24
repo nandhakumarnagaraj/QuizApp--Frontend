@@ -1,46 +1,52 @@
-<!-- components/my-attempts/my-attempts.component.html -->
 <div class="container">
-  <h2>My Quiz Attempts</h2>
+  <h2 class="mb-4">My Quiz Attempts</h2>
 
-  <div class="loading" *ngIf="loading">Loading attempts...</div>
-  
-  <div class="error-message" *ngIf="error">{{ error }}</div>
-
-  <div class="attempts-table" *ngIf="!loading && attempts.length > 0">
-    <table>
-      <thead>
-        <tr>
-          <th>Quiz</th>
-          <th>Score</th>
-          <th>Percentage</th>
-          <th>Grade</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let attempt of attempts">
-          <td>{{ attempt.quizText }}</td>
-          <td>{{ attempt.score }} / {{ attempt.totalQuestions }}</td>
-          <td>{{ attempt.percentage | number:'1.0-0' }}%</td>
-          <td>
-            <span class="grade-badge" [ngClass]="getGradeClass(attempt.grade)">
-              {{ attempt.grade }}
-            </span>
-          </td>
-          <td>{{ attempt.attemptDate | date:'medium' }}</td>
-          <td>
-            <a [routerLink]="['/result', attempt.attemptId]" class="btn-link">
-              View Details
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading attempts...</p>
   </div>
 
-  <div class="empty-state" *ngIf="!loading && attempts.length === 0">
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="!loading && attempts.length > 0">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Quiz</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Grade</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let attempt of attempts">
+            <td>{{ attempt.quizText }}</td>
+            <td>{{ attempt.score }} / {{ attempt.totalQuestions }}</td>
+            <td>{{ attempt.percentage | number:'1.0-0' }}%</td>
+            <td>
+              <span class="badge" [ngClass]="getGradeBadgeClass(attempt.grade)">
+                {{ attempt.grade }}
+              </span>
+            </td>
+            <td>{{ attempt.attemptDate | date:'medium' }}</td>
+            <td>
+              <a [routerLink]="['/result', attempt.attemptId]" class="btn btn-primary btn-sm">
+                View Details
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && attempts.length === 0" class="text-center">
     <p>You haven't attempted any quizzes yet.</p>
-    <a routerLink="/quizzes" class="btn-primary">Browse Quizzes</a>
+    <a routerLink="/quizzes" class="btn btn-primary">Browse Quizzes</a>
   </div>
 </div>

@@ -1,88 +1,84 @@
-<!-- components/quiz-create/quiz-create.component.html -->
 <div class="container">
-  <a routerLink="/quizzes" class="back-link">&larr; Back to Quizzes</a>
-  
+  <a routerLink="/quizzes" class="btn btn-link mb-3">&larr; Back to Quizzes</a>
+
   <h2>Create New Quiz</h2>
 
-  <div class="error-message" *ngIf="error">{{ error }}</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-  <form (ngSubmit)="onSubmit()" class="quiz-form">
-    <!-- Quiz Title -->
-    <div class="form-group">
-      <label for="quizText">Quiz Title</label>
-      <input 
-        type="text" 
-        id="quizText" 
-        [(ngModel)]="quiz.quizText" 
-        name="quizText" 
-        placeholder="Enter quiz title"
-        required
-      />
+  <form (ngSubmit)="onSubmit()">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="quizText" class="form-label">Quiz Title</label>
+          <input
+            type="text"
+            id="quizText"
+            [(ngModel)]="quiz.quizText"
+            name="quizText"
+            class="form-control"
+            placeholder="Enter quiz title"
+            required
+          />
+        </div>
+      </div>
     </div>
 
-    <!-- Questions -->
-    <div class="questions-section">
-      <div class="section-header">
-        <h3>Questions</h3>
-        <button type="button" (click)="addQuestion()" class="btn-add">
-          + Add Question
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Questions</h3>
+      <button type="button" (click)="addQuestion()" class="btn btn-success">
+        + Add Question
+      </button>
+    </div>
+
+    <div *ngFor="let question of quiz.questions; let qi = index" class="card mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Question {{ qi + 1 }}</span>
+        <button
+          type="button"
+          (click)="removeQuestion(qi)"
+          class="btn btn-danger btn-sm"
+          *ngIf="quiz.questions.length > 1"
+        >
+          Remove
         </button>
       </div>
-
-      <div 
-        *ngFor="let question of quiz.questions; let qi = index" 
-        class="question-form-card"
-      >
-        <div class="question-header">
-          <span>Question {{ qi + 1 }}</span>
-          <button 
-            type="button" 
-            (click)="removeQuestion(qi)" 
-            class="btn-remove"
-            *ngIf="quiz.questions.length > 1"
-          >
-            Remove
-          </button>
-        </div>
-
-        <div class="form-group">
-          <input 
-            type="text" 
-            [(ngModel)]="question.questionText" 
+      <div class="card-body">
+        <div class="mb-3">
+          <input
+            type="text"
+            [(ngModel)]="question.questionText"
             [name]="'questionText' + qi"
+            class="form-control"
             placeholder="Enter question text"
             required
           />
         </div>
 
-        <div class="options-form">
-          <label>Options (select correct answer):</label>
-          
-          <div 
-            *ngFor="let option of question.options; let oi = index" 
-            class="option-form-row"
-          >
-            <input 
-              type="radio" 
+        <label class="form-label">Options (select correct answer):</label>
+        <div *ngFor="let option of question.options; let oi = index" class="input-group mb-2">
+          <div class="input-group-text">
+            <input
+              class="form-check-input mt-0"
+              type="radio"
               [name]="'correct' + qi"
               [checked]="option.correct"
               (change)="setCorrectOption(qi, oi)"
             />
-            <input 
-              type="text" 
-              [(ngModel)]="option.optionText" 
-              [name]="'option' + qi + '_' + oi"
-              [placeholder]="'Option ' + 'ABCD'[oi]"
-              required
-            />
           </div>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="option.optionText"
+            [name]="'option' + qi + '_' + oi"
+            [placeholder]="'Option ' + 'ABCD'[oi]"
+            required
+          />
         </div>
       </div>
     </div>
 
-    <!-- Submit -->
-    <div class="form-actions">
-      <button type="submit" [disabled]="loading" class="btn-primary btn-large">
+    <div class="d-grid mt-4">
+      <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">
         {{ loading ? 'Creating...' : 'Create Quiz' }}
       </button>
     </div>

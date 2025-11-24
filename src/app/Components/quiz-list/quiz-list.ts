@@ -11,7 +11,6 @@ import { AuthService } from '../../Services/auth.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './quiz-list.html',
-  styleUrls: ['./quiz-list.css']
 })
 export class QuizListComponent implements OnInit {
   quizzes: Quiz[] = [];

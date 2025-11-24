@@ -1,44 +1,53 @@
-<!-- components/login/login.component.html -->
-<div class="auth-container">
-  <div class="auth-card">
-    <h2>Login</h2>
-    
-    <div class="error-message" *ngIf="error">
-      {{ error }}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title text-center">Login</h2>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-danger" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              [(ngModel)]="credentials.username"
+              name="username"
+              required
+              class="form-control"
+              placeholder="Enter username"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              [(ngModel)]="credentials.password"
+              name="password"
+              required
+              class="form-control"
+              placeholder="Enter password"
+            />
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" [disabled]="loading" class="btn btn-primary">
+              {{ loading ? 'Logging in...' : 'Login' }}
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-center">
+        <p class="mb-0">
+          Don't have an account? <a routerLink="/register">Register here</a>
+        </p>
+      </div>
     </div>
-
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input 
-          type="text" 
-          id="username" 
-          [(ngModel)]="credentials.username" 
-          name="username" 
-          required 
-          placeholder="Enter username"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          [(ngModel)]="credentials.password" 
-          name="password" 
-          required 
-          placeholder="Enter password"
-        />
-      </div>
-
-      <button type="submit" [disabled]="loading" class="btn-primary">
-        {{ loading ? 'Logging in...' : 'Login' }}
-      </button>
-    </form>
-
-    <p class="auth-link">
-      Don't have an account? <a routerLink="/register">Register here</a>
-    </p>
   </div>
 </div>

@@ -1,27 +1,33 @@
-<!-- components/navbar/navbar.component.html -->
-<nav class="navbar">
-  <div class="navbar-brand">
-    <a routerLink="/quizzes">QuizApp</a>
-  </div>
-
-  <div class="navbar-menu">
-    <a routerLink="/quizzes" routerLinkActive="active">Quizzes</a>
-    
-    <ng-container *ngIf="authService.isLoggedIn()">
-      <a routerLink="/my-attempts" routerLinkActive="active">My Attempts</a>
-      <a routerLink="/quiz/create" routerLinkActive="active">Create Quiz</a>
-    </ng-container>
-  </div>
-
-  <div class="navbar-auth">
-    <ng-container *ngIf="!authService.isLoggedIn()">
-      <a routerLink="/login" class="btn-link">Login</a>
-      <a routerLink="/register" class="btn-primary">Register</a>
-    </ng-container>
-
-    <ng-container *ngIf="authService.isLoggedIn()">
-      <span class="user-name">Hi, {{ currentUser?.username }}</span>
-      <button (click)="logout()" class="btn-logout">Logout</button>
-    </ng-container>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/quizzes">QuizApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/quizzes" routerLinkActive="active">Quizzes</a>
+        </li>
+        <ng-container *ngIf="authService.isLoggedIn()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/my-attempts" routerLinkActive="active">My Attempts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/quiz/create" routerLinkActive="active">Create Quiz</a>
+          </li>
+        </ng-container>
+      </ul>
+      <div class="d-flex">
+        <ng-container *ngIf="!authService.isLoggedIn()">
+          <a routerLink="/login" class="btn btn-outline-light me-2">Login</a>
+          <a routerLink="/register" class="btn btn-primary">Register</a>
+        </ng-container>
+        <ng-container *ngIf="authService.isLoggedIn()">
+          <span class="navbar-text me-2">Hi, {{ currentUser?.username }}</span>
+          <button (click)="logout()" class="btn btn-outline-light">Logout</button>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </nav>

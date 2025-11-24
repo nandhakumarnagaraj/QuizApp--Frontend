@@ -35,10 +35,10 @@ export class MyAttemptsComponent implements OnInit {
     });
   }
 
-  getGradeClass(grade: string): string {
-    if (grade === 'A+' || grade === 'A') return 'grade-a';
-    if (grade === 'B') return 'grade-b';
-    if (grade === 'C') return 'grade-c';
-    return 'grade-f';
+  getGradeBadgeClass(grade: string): string {
+    if (grade === 'A+' || grade === 'A') return 'bg-success';
+    if (grade === 'B') return 'bg-primary';
+    if (grade === 'C') return 'bg-warning text-dark';
+    return 'bg-danger';
   }
 }

@@ -12,12 +12,10 @@ import { AuthService } from '../../Services/auth.service';
   templateUrl: './quiz-detail.component.html',
 })
 export class QuizDetailComponent implements OnInit {
-  [x: string]: any;
   quiz: Quiz | null = null;
   loading: boolean = true;
-  error: String = '';
+  error: string = '';
 
-  String: any;
   constructor(
     private route: ActivatedRoute,
     private quizService: QuizService,

@@ -1,41 +1,42 @@
-<!-- components/quiz-detail/quiz-detail.component.html -->
 <div class="container">
-  <a routerLink="/quizzes" class="back-link">&larr; Back to Quizzes</a>
+  <a routerLink="/quizzes" class="btn btn-link mb-3">&larr; Back to Quizzes</a>
 
-  <div class="loading" *ngIf="loading">Loading quiz...</div>
-
-  <div class="error-message" *ngIf="error">{{ error }}</div>
-
-  <div class="quiz-detail" *ngIf="quiz">
-    <div class="quiz-header">
-      <h2>{{ quiz.quizText }}</h2>
-      <div class="quiz-meta">
-        <span>{{ quiz.questions.length }} Questions</span>
-      </div>
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
+    <p>Loading quiz...</p>
+  </div>
 
-    <div class="questions-preview">
-      <h3>Questions Preview</h3>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-      <div class="question-item" *ngFor="let question of quiz.questions; let i = index">
-        <div class="question-number">Q{{ i + 1 }}</div>
-        <div class="question-content">
-          <p class="question-text">{{ question.questionText }}</p>
-          <ul class="options-list">
-            <li *ngFor="let option of question.options; let j = index">
-              {{ String.fromCharCode(65 + j) }}. {{ option.optionText }}
-            </li>
-          </ul>
+  <div *ngIf="quiz">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="mb-0">{{ quiz.quizText }}</h2>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{ quiz.questions.length }} Questions</p>
+        <div *ngIf="authService.isLoggedIn()" class="d-flex gap-2">
+          <a [routerLink]="['/quiz', quiz.quizId, 'attempt']" class="btn btn-primary">Start Quiz</a>
+          <a [routerLink]="['/quiz', quiz.quizId, 'edit']" class="btn btn-secondary">Edit Quiz</a>
+          <a [routerLink]="['/leaderboard', quiz.quizId]" class="btn btn-secondary">View Leaderboard</a>
         </div>
       </div>
     </div>
 
-    <div class="quiz-actions" *ngIf="authService.isLoggedIn()">
-      <a [routerLink]="['/quiz', quiz.quizId, 'attempt']" class="btn-primary btn-large">
-        Start Quiz
-      </a>
-      <a [routerLink]="['/quiz', quiz.quizId, 'edit']" class="btn-secondary"> Edit Quiz </a>
-      <a [routerLink]="['/leaderboard', quiz.quizId]" class="btn-secondary"> View Leaderboard </a>
+    <h3>Questions Preview</h3>
+    <div class="list-group">
+      <div *ngFor="let question of quiz.questions; let i = index" class="list-group-item">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ i + 1 }}. {{ question.questionText }}</h5>
+        </div>
+        <ul class="list-unstyled">
+          <li *ngFor="let option of question.options; let j = index">
+            {{ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[j] }}. {{ option.optionText }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

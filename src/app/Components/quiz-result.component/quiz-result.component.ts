@@ -39,9 +39,9 @@ export class QuizResultComponent implements OnInit {
   }
 
   getGradeClass(grade: string): string {
-    if (grade === 'A+' || grade === 'A') return 'grade-a';
-    if (grade === 'B') return 'grade-b';
-    if (grade === 'C') return 'grade-c';
-    return 'grade-f';
+    if (grade === 'A+' || grade === 'A') return 'success';
+    if (grade === 'B') return 'primary';
+    if (grade === 'C') return 'warning';
+    return 'danger';
   }
 }

@@ -11,7 +11,7 @@ import { AnswerSubmission, QuizSubmissionRequest } from '../../Models/quiz-attem
 @Component({
   selector: 'app-quiz-attempt',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './quiz-attempt.component.html'
 })
 export class QuizAttemptComponent implements OnInit {

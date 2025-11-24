@@ -10,7 +10,6 @@ import { AuthService } from '../../Services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
-  styleUrls: ['./login.css'],
 })
 export class LoginComponent {
   credentials: AuthRequest = {
