@@ -50,9 +50,8 @@ export class QuizListComponent implements OnInit {
     
     this.loading = true;
     this.quizService.searchQuizByText(this.searchQuery).subscribe({
-      next: (quiz) => {
-        // Backend returns a single object, wrap in array
-        this.quizzes = quiz ? [quiz] : [];
+      next: (quizzes) => {
+        this.quizzes = quizzes;
         this.loading = false;
       },
       error: (err) => {

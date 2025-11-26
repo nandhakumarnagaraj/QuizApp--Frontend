@@ -19,8 +19,8 @@ export class QuizService {
     return this.http.get<Quiz>(`${this.baseUrl}/${id}`);
   }
 
-  searchQuizByText(text: string): Observable<Quiz> {
-    return this.http.get<Quiz>(`${this.baseUrl}/search?text=${text}`);
+  searchQuizByText(text: string): Observable<Quiz[]> {
+    return this.http.get<Quiz[]>(`${this.baseUrl}/search?text=${text}`);
   }
 
   createQuiz(quiz: Quiz): Observable<Quiz> {
