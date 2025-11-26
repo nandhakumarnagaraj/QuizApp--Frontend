@@ -2,8 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { QuizResultResponse } from '../../Models/quiz-attempt.model';
-import { QuizAttemptService } from '../../Services/quiz-attempt.service';
+import { QuizResultResponse } from '../../../Models/quiz-attempt.model';
+import { QuizAttemptService } from '../../../Services/quiz-attempt.service';
 
 @Component({
   selector: 'app-quiz-result',

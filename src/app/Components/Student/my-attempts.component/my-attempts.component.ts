@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AttemptHistoryResponse } from '../../Models/quiz-attempt.model';
-import { QuizAttemptService } from '../../Services/quiz-attempt.service';
+import { QuizAttemptService } from '../../../Services/quiz-attempt.service';
 
 
 @Component({

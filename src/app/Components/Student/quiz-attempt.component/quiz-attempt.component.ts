@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Quiz } from '../../Models/quiz.model';
-import { QuizService } from '../../Services/quiz.service';
-import { QuizAttemptService } from '../../Services/quiz-attempt.service';
-import { AnswerSubmission, QuizSubmissionRequest } from '../../Models/quiz-attempt.model';
+import { Quiz } from '../../../Models/quiz.model';
+import { QuizAttemptService } from '../../../Services/quiz-attempt.service';
+import { QuizService } from '../../../Services/quiz.service';
+import { AnswerSubmission, QuizSubmissionRequest } from '../../../Models/quiz-attempt.model';
 
 @Component({
   selector: 'app-quiz-attempt',

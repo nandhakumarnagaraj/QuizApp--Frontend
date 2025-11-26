@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Quiz } from '../../Models/quiz.model';
-import { QuizService } from '../../Services/quiz.service';
-import { AuthService } from '../../Services/auth.service';
+import { Quiz } from '../../../Models/quiz.model';
+import { QuizService } from '../../../Services/quiz.service';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-quiz-detail',

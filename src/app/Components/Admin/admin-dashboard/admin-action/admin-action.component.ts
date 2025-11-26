@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { QuizListComponent } from '../../quiz-list/quiz-list';
+import { QuizListComponent } from '../../../Public/quiz-list/quiz-list';
 
 @Component({
   selector: 'app-admin-action',
