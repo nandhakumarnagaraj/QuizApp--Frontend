@@ -1,0 +1,39 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4 text-white">
+    <h2>🏆 Leaderboard</h2>
+    <a [routerLink]="['/quiz', quizId]" class="btn btn-outline-light">Back to Quiz</a>
+  </div>
+
+  <div *ngIf="loading" class="text-center text-white">
+    <div class="spinner-border"></div>
+  </div>
+
+  <div class="card p-0 overflow-hidden" *ngIf="!loading">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Rank</th>
+          <th>Player</th>
+          <th>Score</th>
+          <th>Grade</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of leaderboard; let i = index">
+          <td>
+            <span class="badge rounded-pill" [ngClass]="i < 3 ? 'bg-warning text-dark' : 'bg-secondary'">
+              #{{ i + 1 }}
+            </span>
+          </td>
+          <td class="fw-bold">{{ entry.quizText }}</td> <td>{{ entry.score }}/{{ entry.totalQuestions }} ({{ entry.percentage | number:'1.0-0' }}%)</td>
+          <td><span class="badge bg-primary">{{ entry.grade }}</span></td>
+          <td>{{ entry.attemptDate | date:'mediumDate' }}</td>
+        </tr>
+        <tr *ngIf="leaderboard.length === 0">
+          <td colspan="5" class="text-center py-4 text-muted">No attempts yet. Be the first!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
