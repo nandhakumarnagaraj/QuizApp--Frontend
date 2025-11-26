@@ -58,18 +58,20 @@
             >
               Info
             </a>
-            <a
-              [routerLink]="['/quiz', quiz.quizId, 'edit']"
-              class="btn btn-outline-secondary"
-            >
-              Edit
-            </a>
-            <button
-              (click)="deleteQuiz(quiz.quizId!)"
-              class="btn btn-outline-danger"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <ng-container *ngIf="isAdmin">
+              <a
+                [routerLink]="['/quiz', quiz.quizId, 'edit']"
+                class="btn btn-outline-secondary"
+              >
+                Edit
+              </a>
+              <button
+                (click)="deleteQuiz(quiz.quizId!)"
+                class="btn btn-outline-danger"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </ng-container>
           </div>
         </div>
       </div>

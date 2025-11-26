@@ -1,52 +1,76 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title text-center">Login</h2>
-      </div>
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-lg-5 col-md-8 col-sm-10">
+    <div class="card p-4 shadow-lg border-0">
       <div class="card-body">
+        <div class="text-center mb-4">
+          <h1 class="h3 fw-bold">Welcome Back!</h1>
+          <p class="text-muted">Sign in to continue to your Quiz App</p>
+        </div>
+
         <div class="alert alert-danger" *ngIf="error">
-          {{ error }}
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error }}
         </div>
 
         <form (ngSubmit)="onSubmit()">
-          <div class="mb-3">
+          <div class="mb-3 position-relative">
             <label for="username" class="form-label">Username</label>
-            <input
-              type="text"
-              id="username"
-              [(ngModel)]="credentials.username"
-              name="username"
-              required
-              class="form-control"
-              placeholder="Enter username"
-            />
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0"
+                ><i class="bi bi-person"></i
+              ></span>
+              <input
+                type="text"
+                id="username"
+                [(ngModel)]="credentials.username"
+                name="username"
+                required
+                class="form-control border-start-0"
+                placeholder="Enter username"
+              />
+            </div>
           </div>
 
-          <div class="mb-3">
+          <div class="mb-4 position-relative">
             <label for="password" class="form-label">Password</label>
-            <input
-              type="password"
-              id="password"
-              [(ngModel)]="credentials.password"
-              name="password"
-              required
-              class="form-control"
-              placeholder="Enter password"
-            />
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0"
+                ><i class="bi bi-lock"></i
+              ></span>
+              <input
+                type="password"
+                id="password"
+                [(ngModel)]="credentials.password"
+                name="password"
+                required
+                class="form-control border-start-0"
+                placeholder="Enter password"
+              />
+            </div>
           </div>
 
-          <div class="d-grid">
-            <button type="submit" [disabled]="loading" class="btn btn-primary">
-              {{ loading ? 'Logging in...' : 'Login' }}
+          <div class="d-grid gap-2">
+            <button
+              type="submit"
+              [disabled]="loading"
+              class="btn btn-primary btn-lg"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              {{ loading ? "Signing In..." : "Sign In" }}
             </button>
           </div>
         </form>
-      </div>
-      <div class="card-footer text-center">
-        <p class="mb-0">
-          Don't have an account? <a routerLink="/register">Register here</a>
-        </p>
+
+        <div class="text-center mt-4">
+          <p class="mb-0">
+            Don't have an account?
+            <a routerLink="/register" class="fw-bold">Register here</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>

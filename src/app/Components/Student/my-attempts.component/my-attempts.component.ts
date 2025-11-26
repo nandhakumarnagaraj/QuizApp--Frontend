@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { AttemptHistoryResponse } from '../../Models/quiz-attempt.model';
+import { AttemptHistoryResponse } from '../../../Models/quiz-attempt.model';
 import { QuizAttemptService } from '../../../Services/quiz-attempt.service';
-
 
 @Component({
   selector: 'app-my-attempts',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './my-attempts.component.html'
+  templateUrl: './my-attempts.component.html',
 })
 export class MyAttemptsComponent implements OnInit {
+  @Input() limit: number | undefined;
   attempts: AttemptHistoryResponse[] = [];
   loading: boolean = true;
   error: string = '';
@@ -25,13 +25,17 @@ export class MyAttemptsComponent implements OnInit {
   loadAttempts(): void {
     this.quizAttemptService.getMyAttempts().subscribe({
       next: (data) => {
-        this.attempts = data;
+        if (this.limit) {
+          this.attempts = data.slice(0, this.limit);
+        } else {
+          this.attempts = data;
+        }
         this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to load attempts';
         this.loading = false;
-      }
+      },
     });
   }
 

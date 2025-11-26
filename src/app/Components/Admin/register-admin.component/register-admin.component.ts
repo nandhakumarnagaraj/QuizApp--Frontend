@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterRequest } from '../../Models/user.model';
-import { AuthService } from '../../Services/auth.service';
+import { AuthService } from '../../../Services/auth.service';
+import { RegisterRequest } from '../../../Models/user.model';
 
 @Component({
   selector: 'app-register-admin',

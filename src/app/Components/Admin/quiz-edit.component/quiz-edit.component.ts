@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Question, Quiz } from '../../Models/quiz.model';
-import { QuizService } from '../../Services/quiz.service';
+import { Quiz } from '../../../Models/quiz.model';
+import { QuizService } from '../../../Services/quiz.service';
 
 @Component({
   selector: 'app-quiz-edit',

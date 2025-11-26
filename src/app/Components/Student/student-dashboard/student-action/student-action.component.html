@@ -1,7 +1,38 @@
-<div class="container mt-4">
-  <h2>Student Dashboard</h2>
-  <div class="list-group">
-    <a routerLink="/quizzes" class="list-group-item list-group-item-action">View Quizzes</a>
-    <a routerLink="/my-attempts" class="list-group-item list-group-item-action">My Attempts</a>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+      <h1 class="fw-bold">Welcome, {{ studentName }}!</h1>
+      <p class="text-muted">Ready to test your knowledge?</p>
+    </div>
+    <a routerLink="/quizzes" class="btn btn-primary btn-lg"
+      ><i class="bi bi-search me-2"></i>Browse Quizzes</a
+    >
   </div>
+
+  <!-- Stats -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="card text-center h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Quizzes Attempted</h5>
+          <p class="card-text display-4 fw-bold">
+            {{ attemptCount }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card text-center h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Average Score</h5>
+          <p class="card-text display-4 fw-bold">
+            {{ averageScore | number: "1.0-1" }}%
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="fw-bold mb-4">Recent Attempts</h3>
+  <app-my-attempts [limit]="5"></app-my-attempts>
 </div>

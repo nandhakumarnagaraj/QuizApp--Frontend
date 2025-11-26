@@ -7,6 +7,9 @@ import { AuthRequest, AuthResponse, RegisterRequest } from '../Models/user.model
   providedIn: 'root',
 })
 export class AuthService {
+  getProfile() {
+    throw new Error('Method not implemented.');
+  }
   private baseUrl = 'http://localhost:8080/api/auth';
   private currentUserSubject = new BehaviorSubject<AuthResponse | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -53,3 +56,4 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 }
+

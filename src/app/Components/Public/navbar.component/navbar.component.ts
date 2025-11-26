@@ -1,17 +1,17 @@
-// ========== components/navbar/navbar.component.ts ==========
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { AuthService } from '../../Services/auth.service';
-
+import { AuthService } from '../../../Services/auth.service';
+import { Role } from '../../../Models/user.model';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
-  templateUrl: './navbar.component.html'
+  templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  public Role = '';
   constructor(public authService: AuthService, private router: Router) {}
 
   logout(): void {

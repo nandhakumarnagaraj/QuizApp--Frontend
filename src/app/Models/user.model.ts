@@ -13,3 +13,12 @@ export interface AuthResponse {
   token: string;
   username: string;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  roles: Role[];
+}
+
+export type Role = 'STUDENT' | 'ADMIN';

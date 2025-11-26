@@ -37,7 +37,7 @@ export class QuizListComponent implements OnInit {
       error: (err) => {
         this.error = 'Failed to load quizzes';
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -47,7 +47,7 @@ export class QuizListComponent implements OnInit {
       this.loadQuizzes();
       return;
     }
-    
+
     this.loading = true;
     this.quizService.searchQuizByText(this.searchQuery).subscribe({
       next: (quizzes) => {
@@ -58,7 +58,7 @@ export class QuizListComponent implements OnInit {
         // 404 or empty result
         this.quizzes = [];
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -66,9 +66,9 @@ export class QuizListComponent implements OnInit {
     if (confirm('Are you sure you want to delete this quiz?')) {
       this.quizService.deleteQuiz(id).subscribe({
         next: () => {
-          this.quizzes = this.quizzes.filter(q => q.quizId !== id);
+          this.quizzes = this.quizzes.filter((q) => q.quizId !== id);
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error(err),
       });
     }
   }

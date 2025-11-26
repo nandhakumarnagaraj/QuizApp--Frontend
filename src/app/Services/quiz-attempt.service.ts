@@ -11,6 +11,9 @@ import {
   providedIn: 'root',
 })
 export class QuizAttemptService {
+  getAttemptCount() {
+    throw new Error('Method not implemented.');
+  }
   private baseUrl = 'http://localhost:8080/api/quiz-attempts';
 
   constructor(private http: HttpClient) {}

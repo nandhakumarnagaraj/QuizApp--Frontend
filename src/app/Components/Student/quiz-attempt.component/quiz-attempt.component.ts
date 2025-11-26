@@ -1,26 +1,33 @@
-// ========== components/quiz-attempt/quiz-attempt.component.ts ==========
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../../../Models/quiz.model';
 import { QuizAttemptService } from '../../../Services/quiz-attempt.service';
 import { QuizService } from '../../../Services/quiz.service';
-import { AnswerSubmission, QuizSubmissionRequest } from '../../../Models/quiz-attempt.model';
+import {
+  AnswerSubmission,
+  QuizSubmissionRequest,
+} from '../../../Models/quiz-attempt.model';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-attempt',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './quiz-attempt.component.html'
+  templateUrl: './quiz-attempt.component.html',
 })
-export class QuizAttemptComponent implements OnInit {
+export class QuizAttemptComponent implements OnInit, OnDestroy {
   quiz: Quiz | null = null;
   currentQuestionIndex: number = 0;
   selectedAnswers: Map<number, number> = new Map();
   loading: boolean = true;
   submitting: boolean = false;
   error: string = '';
+
+  timer: string = '15:00';
+  private timerSubscription: Subscription | null = null;
+  private timeInSeconds: number = 15 * 60;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,15 +43,38 @@ export class QuizAttemptComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
   loadQuiz(id: number): void {
     this.quizService.getQuizById(id).subscribe({
       next: (data) => {
         this.quiz = data;
         this.loading = false;
+        this.startTimer();
       },
       error: (err) => {
         this.error = 'Failed to load quiz';
         this.loading = false;
+      },
+    });
+  }
+
+  startTimer(): void {
+    this.timerSubscription = interval(1000).subscribe(() => {
+      this.timeInSeconds--;
+      const minutes = Math.floor(this.timeInSeconds / 60);
+      const seconds = this.timeInSeconds % 60;
+      this.timer = `${minutes.toString().padStart(2, '0')}:${seconds
+        .toString()
+        .padStart(2, '0')}`;
+
+      if (this.timeInSeconds <= 0) {
+        this.timerSubscription?.unsubscribe();
+        this.submitQuiz();
       }
     });
   }
@@ -85,9 +115,18 @@ export class QuizAttemptComponent implements OnInit {
     return this.selectedAnswers.size;
   }
 
-  submitQuiz(): void {
-    if (!this.quiz) return;
+  get progressPercentage(): number {
+    if (!this.quiz) return 0;
+    return (this.answeredCount / this.quiz.questions.length) * 100;
+  }
 
+  submitQuiz(): void {
+    if (!this.quiz || this.submitting) return;
+
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+    
     const answers: AnswerSubmission[] = [];
     this.selectedAnswers.forEach((optionId, questionId) => {
       answers.push({ questionId, selectedOptionId: optionId });
@@ -95,7 +134,7 @@ export class QuizAttemptComponent implements OnInit {
 
     const request: QuizSubmissionRequest = {
       quizId: this.quiz.quizId!,
-      answers
+      answers,
     };
 
     this.submitting = true;
@@ -106,7 +145,7 @@ export class QuizAttemptComponent implements OnInit {
       error: (err) => {
         this.error = 'Failed to submit quiz';
         this.submitting = false;
-      }
+      },
     });
   }
 }
